@@ -1,0 +1,17 @@
+services:
+  auth-inspect:
+    build: ./inspector
+    image: cpa-auth-inspect:local
+    container_name: cpa-auth-inspect
+    ports:
+      - "127.0.0.1:18318:18318"
+    environment:
+      AUTH_DIR: /auths
+      PROBE_CONCURRENCY: "8"
+      PROBE_TIMEOUT: "12"
+      PROBE_MODEL: grok-3-mini
+    volumes:
+      - type: bind
+        source: ${CPA_AUTH_DIR:-./auths}
+        target: /auths
+    restart: unless-stopped

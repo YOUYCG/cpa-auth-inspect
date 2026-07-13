@@ -1,0 +1,6 @@
+CPA Auth Inspect
+Copyright (c) 2026 YOUYCG
+
+The native plugin ABI declarations and integration pattern are derived from
+CLIProxyAPI, Copyright its contributors, licensed under the MIT License:
+https://github.com/router-for-me/CLIProxyAPI

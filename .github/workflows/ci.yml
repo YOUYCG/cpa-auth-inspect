@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Go tests
+        run: go test ./...
+      - name: Build native plugin
+        run: go build -trimpath -buildmode=c-shared -o dist/auth-inspect-linux-amd64.so .
+      - name: ABI smoke test
+        run: python abi_smoke_test.py dist/auth-inspect-linux-amd64.so
+      - name: Python syntax check
+        run: python -m py_compile inspector/app.py
