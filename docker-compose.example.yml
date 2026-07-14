@@ -3,6 +3,7 @@ services:
     build: ./inspector
     image: cpa-auth-inspect:local
     container_name: cpa-auth-inspect
+    init: true
     ports:
       - "127.0.0.1:18318:18318"
     environment:
@@ -10,8 +11,23 @@ services:
       PROBE_CONCURRENCY: "8"
       PROBE_TIMEOUT: "12"
       PROBE_MODEL: grok-3-mini
+      XAI_REAUTH_AUTO: "1"
+      # Headed Chromium inside Xvfb; true headless is commonly blocked by Turnstile.
+      XAI_REAUTH_HEADLESS: "0"
+      XAI_REAUTH_CONCURRENCY: "1"
+      XAI_REAUTH_TIMEOUT: "300"
+      SSO_AUTH_DIR: /sso_auths
+      # Match host proxy used by grok_bytao (often 7890/7897)
+      XAI_REAUTH_PROXY: "http://host.docker.internal:7897"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - type: bind
         source: ${CPA_AUTH_DIR:-./auths}
         target: /auths
+      - type: bind
+        source: ${SSO_AUTH_DIR_HOST:-../grok_bytao/sso_auths}
+        target: /sso_auths
+        read_only: true
+    shm_size: "1gb"
     restart: unless-stopped

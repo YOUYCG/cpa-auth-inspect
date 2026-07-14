@@ -25,5 +25,10 @@ jobs:
         run: go build -trimpath -buildmode=c-shared -o dist/auth-inspect-linux-amd64.so .
       - name: ABI smoke test
         run: python abi_smoke_test.py dist/auth-inspect-linux-amd64.so
-      - name: Python syntax check
-        run: python -m py_compile inspector/app.py
+      - name: Install inspector dependencies
+        run: python -m pip install -r inspector/requirements.txt
+      - name: Python checks
+        working-directory: inspector
+        run: |
+          python -m py_compile app.py
+          python -m unittest -v
