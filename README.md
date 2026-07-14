@@ -9,7 +9,7 @@
 - 支持 xAI、Codex、Claude、Gemini / Antigravity 认证识别。
 - 本地检查 JSON、Token 到期时间、刷新能力和禁用状态。
 - 可选在线探测；默认只做本地检查。
-- 支持 xAI 与 Gemini 的可选 Token 刷新。
+- 支持 xAI 与 codex等的可选 Token 刷新。
 - 支持批量启用或禁用认证文件。
 - 在 CLIProxyAPI 管理中心注册“认证巡检”菜单。
 - 对外 API 结果会剔除 access token、refresh token、session token 和文件真实路径。
