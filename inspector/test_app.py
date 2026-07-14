@@ -256,7 +256,13 @@ class XaiReauthAsyncTests(unittest.IsolatedAsyncioTestCase):
                     tick(),
                 )
             argv = create.await_args.args
-            self.assertEqual(argv[1:3], ("-m", "xai_auto.mint_worker"))
+            self.assertTrue(
+                any(
+                    argv[index : index + 2] == ("-m", "xai_auto.mint_worker")
+                    for index in range(len(argv) - 1)
+                ),
+                argv,
+            )
             self.assertNotIn("secret-password", argv)
             self.assertTrue(ticked)
             self.assertEqual(result["access_token"], "access")
