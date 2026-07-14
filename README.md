@@ -95,7 +95,7 @@ CPA_AUTH_DIR=/path/to/auths docker compose -f docker-compose.example.yml up -d -
 完成一次 xAI 巡检后，点击“待重授权 xAI”可筛出 `invalid`、`token_expired`
 和 `needs_refresh` 文件。
 
-默认走**自动授权**（参考 `grok_bytao` 的 device-code + Chromium 确认链路）：
+默认走**自动授权**（device-code + Chromium 确认链路）：
 
 1. 解析登录凭据，优先级：
    - 认证 JSON 内的 `email` / `password` / `sso`（含 `oauth_record`）
